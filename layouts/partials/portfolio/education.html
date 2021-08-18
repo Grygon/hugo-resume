@@ -6,7 +6,10 @@
                 <div class="resume-content mr-auto">
                   <h3 class="mb-0">{{ .school | markdownify }}</h3>
                   <div class="subheading mb-3">{{ .degree }}</div>
-                  <div>{{ .major | markdownify }}</div>
+                  <div><div class="labeled-text">Major:</div>{{ .major | markdownify }}</div>
+                  {{ if isset . "minor" }}
+                  <div><div class="labeled-text">Minor:</div>{{ .minor | markdownify }}</div>
+                  {{ end }}
                   <p>{{ .notes | markdownify }}
                 </div>
                 <div class="resume-date text-md-right">
