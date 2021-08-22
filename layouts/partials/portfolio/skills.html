@@ -6,9 +6,22 @@
             <ul>
             {{ range .skills }}
                 {{ if isset . "name" }}
-                    {{ $devicon := cond (in $.Site.Data.devicons (lower .icon)) (lower .icon) (cond (in $.Site.Data.devicons (lower .name)) (lower .name) "devicon") }}
+                    {{ $icon := "devicon devicon-devicon-plain"}}
+                    {{ if (isset . "icon")}}
+                      {{ if (in $.Site.Data.devicons (lower .icon)) }}
+                        {{ $icon = (printf "%s%s%s" "devicon devicon-" .icon "-plain")}}
+                      {{ else if (in $.Site.Data.fabicons (lower .icon)) }}
+                        {{ $icon = (printf "%s%s" "fab fa-" .icon)}}
+                      {{ else if (in $.Site.Data.faricons (lower .icon)) }}
+                        {{ $icon = (printf "%s%s" "far fa-" .icon)}}
+                      {{ else if (in $.Site.Data.fasicons (lower .icon)) }}
+                        {{ $icon = (printf "%s%s" "fas fa-" .icon)}}
+                      {{ else if (in $.Site.Data.devicons (lower .name))}}
+                        {{ $icon = (printf "%s%s%s" "devicon devicon-" (lower .name) "-plain")}}
+                      {{ end }}
+                    {{ end }}
                     <li class="list-inline-item">
-                      <i class="devicon devicon-{{ $devicon }}-plain"></i>
+                      <i class="{{ $icon }}"></i>
                       {{if isset . "link"}}
                           <a href="{{.link}}">{{ .name }}</a>
                       {{ else }}
